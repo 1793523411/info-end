@@ -2,6 +2,7 @@ package table
 
 import (
 	"fmt"
+	allconst "info-end/const"
 	"info-end/handler/table"
 	"info-end/middleware"
 	"info-end/utils"
@@ -37,6 +38,25 @@ func UploadTopImg(c *gin.Context) {
 			"code": 0,
 			"msg":  "success",
 			"data": resPath,
+		})
+	}
+}
+
+func CreateTopicRecord(c *gin.Context) {
+	body := table.TopicRecord{}
+	c.BindJSON(&body)
+	res, err := table.CreateTopicRecord(allconst.Client, body)
+	if err != nil {
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "success",
+			"data": res,
 		})
 	}
 }
