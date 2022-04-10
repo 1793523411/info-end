@@ -56,6 +56,10 @@ func InitRouter() {
 
 		apiv1.POST("/upload_top_img", table.UploadTopImg)
 		apiv1.POST("/create_topic_record", table.CreateTopicRecord)
+		apiv1.POST("/get_topic_list", table.GetAllTopicRecord)
+		apiv1.GET("/search_topic_list", table.SearchTopicRecordByRid)
+		apiv1.POST("/update_topic_list", table.UpdateTopicRecord)
+		apiv1.GET("/delete_topic_record", table.DelTopicRecord)
 
 		apiv1.POST("/getList", func(c *gin.Context) {
 			info, exit := c.Get("claims")

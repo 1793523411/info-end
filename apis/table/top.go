@@ -60,3 +60,80 @@ func CreateTopicRecord(c *gin.Context) {
 		})
 	}
 }
+
+func GetAllTopicRecord(c *gin.Context) {
+	body := table.TopicSearchParams{}
+	username, _ := c.Get("username")
+	userType, _ := table.GetUserType(allconst.Client, username)
+	c.BindJSON(&body)
+	res, err := table.GetAllTopicRecord(allconst.Client, body, userType, username)
+	if err != nil {
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "success",
+			"data": res,
+		})
+	}
+}
+
+func SearchTopicRecordByRid(c *gin.Context) {
+	rid := c.Query("rid")
+	res, err := table.SearchTopicRecordByRid(allconst.Client, rid)
+	if err != nil {
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "success",
+			"data": res,
+		})
+	}
+}
+
+func UpdateTopicRecord(c *gin.Context) {
+	body := table.TopicRecord{}
+	c.BindJSON(&body)
+	res, err := table.UpdateTopicRecord(allconst.Client, body)
+	if err != nil {
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "success",
+			"data": res,
+		})
+	}
+}
+
+func DelTopicRecord(c *gin.Context) {
+	rid := c.Query("rid")
+	username, _ := c.Get("username")
+	res, err := table.DelTopicRecord(allconst.Client, rid, username)
+	if err != nil {
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  err.Error(),
+			"data": nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "success",
+			"data": res,
+		})
+	}
+}
