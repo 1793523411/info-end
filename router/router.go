@@ -5,7 +5,11 @@ import (
 
 	"info-end/apis/other"
 	"info-end/apis/table"
+	_ "info-end/docs"
 	"info-end/middleware"
+
+	gs "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +29,7 @@ func InitRouter() {
 			"code":    0,
 		})
 	})
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 
 	r.GET("/test", other.SearchDemo)
 

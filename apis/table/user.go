@@ -33,6 +33,20 @@ func RegistyUser(c *gin.Context) {
 
 }
 
+type UserLogin struct {
+	UserName string `json:"username"`
+	PassWord string `json:"password"`
+}
+
+// LoginUser 用户登录
+// @Summary 用户登录
+// @Description 用户登录
+// @Tags user
+// @Produce application/json
+// @Param  body body UserLogin true "用户登录参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} table.loginInfo
+// @Router /user/login [post]
 func LoginUser(c *gin.Context) {
 	body := table.User{}
 	c.BindJSON(&body)

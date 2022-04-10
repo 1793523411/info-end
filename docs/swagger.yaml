@@ -1,0 +1,54 @@
+basePath: /
+definitions:
+  table.UserLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  table.loginInfo:
+    properties:
+      status:
+        type: string
+      token:
+        type: string
+      type:
+        type: string
+      u_id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact:
+    name: yangguojie
+  description: 毕设后端接口文档
+  termsOfService: http://localhost:8000/
+  title: 毕设后端接口文档
+  version: "1.0"
+paths:
+  /user/login:
+    post:
+      description: 用户登录
+      parameters:
+      - description: 用户登录参数
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/table.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/table.loginInfo'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户登录
+      tags:
+      - user
+swagger: "2.0"
