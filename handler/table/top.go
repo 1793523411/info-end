@@ -42,6 +42,7 @@ type TopicRecord struct {
 	UserName  string `json:"user_name"`
 	TopicType string `json:"topic_type"`
 	TopicBody string `json:"topic_body"`
+	TopicTime int64  `json:"topic_time"`
 }
 
 func CreateTopicRecord(client *tablestore.TableStoreClient, data TopicRecord) (interface{}, error) {
@@ -51,6 +52,7 @@ func CreateTopicRecord(client *tablestore.TableStoreClient, data TopicRecord) (i
 		UserName:  data.UserName,
 		TopicType: data.TopicType,
 		TopicBody: data.TopicBody,
+		TopicTime: data.TopicTime,
 	}
 	putRowRequest := new(tablestore.PutRowRequest)
 	putRowChange := new(tablestore.PutRowChange)
@@ -61,6 +63,8 @@ func CreateTopicRecord(client *tablestore.TableStoreClient, data TopicRecord) (i
 	putRowChange.PrimaryKey = putPk
 	putRowChange.AddColumn("topic_type", newData.TopicType)
 	putRowChange.AddColumn("topic_body", newData.TopicBody)
+	putRowChange.AddColumn("topic_time", newData.TopicTime)
+	fmt.Print(newData.TopicTime)
 	putRowChange.SetCondition(tablestore.RowExistenceExpectation_IGNORE)
 	putRowRequest.PutRowChange = putRowChange
 	res, err := client.PutRow(putRowRequest)
@@ -84,7 +88,7 @@ func GetAllTopicRecord(client *tablestore.TableStoreClient, searchBody TopicSear
 	searchRequest := &tablestore.SearchRequest{}
 	searchRequest.SetTableName(allconst.Tables["topic_record"])
 	searchRequest.SetIndexName(allconst.Table_index["topic_record"])
-	fmt.Println(userType, username)
+	fmt.Println(userType)
 	if userType == "admin" {
 		query := &search.MatchAllQuery{}
 		searchQuery := search.NewSearchQuery()
@@ -142,7 +146,8 @@ func handleGetAllTopicRecordRes(originData *tablestore.SearchResponse) TopicReco
 		var temp TopicRecord
 		temp.Rid = item.PrimaryKey.PrimaryKeys[0].Value.(string)
 		temp.UserName = item.PrimaryKey.PrimaryKeys[1].Value.(string)
-		temp.TopicType = item.Columns[1].Value.(string)
+		temp.TopicType = item.Columns[2].Value.(string)
+		temp.TopicTime = item.Columns[1].Value.(int64)
 		temp.TopicBody = item.Columns[0].Value.(string)
 		res = append(res, temp)
 	}
@@ -187,6 +192,7 @@ func UpdateTopicRecord(client *tablestore.TableStoreClient, data TopicRecord) (i
 	updateRowChange.PrimaryKey = updatePk
 	updateRowChange.PutColumn("topic_type", data.TopicType)
 	updateRowChange.PutColumn("topic_body", data.TopicBody)
+	updateRowChange.PutColumn("topic_time", data.TopicTime)
 	updateRowChange.SetCondition(tablestore.RowExistenceExpectation_EXPECT_EXIST)
 	updateRowRequest.UpdateRowChange = updateRowChange
 	res, err := client.UpdateRow(updateRowRequest)
