@@ -6,7 +6,7 @@ import (
 
 // @title 毕设后端接口文档
 // @version 1.0
-// @description 毕设后端接口文档
+// @description 毕设后端接口文档 部分接口
 // @termsOfService http://localhost:8000/
 
 // @contact.name yangguojie

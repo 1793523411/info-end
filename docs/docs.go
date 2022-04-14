@@ -19,6 +19,45 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/search_user_info": {
+            "get": {
+                "description": "查询用户信息!!",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "查询用户信息!",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "uid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/table.UserInfo"
+                        }
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "security": [
@@ -57,6 +96,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "table.UserInfo": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "table.UserLogin": {
             "type": "object",
             "properties": {
@@ -98,7 +163,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "毕设后端接口文档",
-	Description:      "毕设后端接口文档",
+	Description:      "毕设后端接口文档 部分接口",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

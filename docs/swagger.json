@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "毕设后端接口文档",
+        "description": "毕设后端接口文档 部分接口",
         "title": "毕设后端接口文档",
         "termsOfService": "http://localhost:8000/",
         "contact": {
@@ -12,6 +12,45 @@
     "host": "127.0.0.1:8080",
     "basePath": "/",
     "paths": {
+        "/api/v1/search_user_info": {
+            "get": {
+                "description": "查询用户信息!!",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "查询用户信息!",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "uid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/table.UserInfo"
+                        }
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "security": [
@@ -50,6 +89,32 @@
         }
     },
     "definitions": {
+        "table.UserInfo": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "table.UserLogin": {
             "type": "object",
             "properties": {

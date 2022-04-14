@@ -111,6 +111,21 @@ func SaveUserInfo(c *gin.Context) {
 		})
 	}
 }
+
+type SwggerSearchUserInfo struct {
+	Uid      string `json:"uid"`
+	UserName string `json:"username"`
+}
+
+// SearchUserInfo 查询用户信息
+// @Summary 查询用户信息!
+// @Description 查询用户信息!!
+// @Tags user
+// @Produce application/json
+// @Param object query SwggerSearchUserInfo true "查询参数"
+// @Param token header string true "Bearer 用户令牌"
+// @Success 200 {object} table.UserInfo
+// @Router /api/v1/search_user_info [get]
 func SearchUserInfo(c *gin.Context) {
 	uid := c.Query("uid")
 	username := c.Query("username")
