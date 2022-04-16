@@ -66,12 +66,27 @@ func LoginUser(c *gin.Context) {
 	}
 }
 
+type SwggerRefeshToken struct {
+	UserName string `json:"username"`
+}
+
+type RefreshTokenRes struct {
+	Token string `json:"token"`
+}
+
+// SearchUserInfo 刷新用户token
+// @Summary 刷新用户token!
+// @Description 刷新用户token!!
+// @Tags user
+// @Produce application/json
+// @Param object query SwggerRefeshToken true "查询参数"
+// @Success 200 {object} RefreshTokenRes
+// @Router /user/refresh_token [get]
 func RefreshToken(c *gin.Context) {
 	jwtCon := middleware.NewJWT()
-	body := table.User{}
-	c.BindJSON(&body)
+	username := c.Query("username")
 	token, err := jwtCon.CreateToken(middleware.CustomClaims{
-		UserName: body.UserName,
+		UserName: username,
 		Password: "refresh",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * 1).Unix(),
@@ -87,7 +102,9 @@ func RefreshToken(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"code": 0,
 			"msg":  "success",
-			"data": token,
+			"data": RefreshTokenRes{
+				Token: token,
+			},
 		})
 	}
 
@@ -113,8 +130,7 @@ func SaveUserInfo(c *gin.Context) {
 }
 
 type SwggerSearchUserInfo struct {
-	Uid      string `json:"uid"`
-	UserName string `json:"username"`
+	Uid string `json:"uid"`
 }
 
 // SearchUserInfo 查询用户信息
@@ -128,7 +144,7 @@ type SwggerSearchUserInfo struct {
 // @Router /api/v1/search_user_info [get]
 func SearchUserInfo(c *gin.Context) {
 	uid := c.Query("uid")
-	username := c.Query("username")
+	username, _ := c.Get("username")
 	res, err := table.SearchUserInfo(allconst.Client, uid, username)
 	if err != nil {
 		c.JSON(200, gin.H{

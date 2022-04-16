@@ -37,11 +37,6 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "username",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "description": "Bearer 用户令牌",
                         "name": "token",
                         "in": "header",
@@ -93,9 +88,44 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/user/refresh_token": {
+            "get": {
+                "description": "刷新用户token!!",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "刷新用户token!",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/table.RefreshTokenRes"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "table.RefreshTokenRes": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
         "table.UserInfo": {
             "type": "object",
             "properties": {

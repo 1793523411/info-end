@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  table.RefreshTokenRes:
+    properties:
+      token:
+        type: string
+    type: object
   table.UserInfo:
     properties:
       avatar:
@@ -53,9 +58,6 @@ paths:
       - in: query
         name: uid
         type: string
-      - in: query
-        name: username
-        type: string
       - description: Bearer 用户令牌
         in: header
         name: token
@@ -91,6 +93,23 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 用户登录
+      tags:
+      - user
+  /user/refresh_token:
+    get:
+      description: 刷新用户token!!
+      parameters:
+      - in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/table.RefreshTokenRes'
+      summary: 刷新用户token!
       tags:
       - user
 swagger: "2.0"

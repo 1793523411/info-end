@@ -37,7 +37,7 @@ func InitRouter() {
 	{
 		user.POST("/registy", table.RegistyUser)
 		user.POST("/login", table.LoginUser)
-		user.POST("/refresh_token", table.RefreshToken)
+		user.GET("/refresh_token", table.RefreshToken)
 	}
 
 	apiv1 := r.Group("/api/v1")

@@ -259,7 +259,7 @@ func updateUserInfo(client *tablestore.TableStoreClient, data UserInfo) (interfa
 }
 
 //! 查询用户信息
-func SearchUserInfo(client *tablestore.TableStoreClient, uid string, username string) (interface{}, error) {
+func SearchUserInfo(client *tablestore.TableStoreClient, uid string, username interface{}) (interface{}, error) {
 	getRowRequest := new(tablestore.GetRowRequest)
 	criteria := new(tablestore.SingleRowQueryCriteria)
 	putPk := new(tablestore.PrimaryKey)
