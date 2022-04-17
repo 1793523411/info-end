@@ -19,6 +19,44 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/save_user_info": {
+            "post": {
+                "description": "更新用户信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "更新用户信息",
+                "parameters": [
+                    {
+                        "description": "用户登录参数",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/table.UserInfo"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/table.UserInfo"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/search_user_info": {
             "get": {
                 "description": "查询用户信息!!",

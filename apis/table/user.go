@@ -110,6 +110,15 @@ func RefreshToken(c *gin.Context) {
 
 }
 
+// SaveUserInfo 更新用户信息
+// @Summary 更新用户信息
+// @Description 更新用户信息
+// @Tags user
+// @Produce application/json
+// @Param  body body table.UserInfo true "用户登录参数"
+// @Param token header string true "Bearer 用户令牌"
+// @Success 200 {object} table.UserInfo
+// @Router /api/v1/save_user_info [post]
 func SaveUserInfo(c *gin.Context) {
 	body := table.UserInfo{}
 	c.BindJSON(&body)
