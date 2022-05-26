@@ -92,6 +92,14 @@ func GetAllTopicRecord(client *tablestore.TableStoreClient, searchBody TopicSear
 	if userType == "admin" {
 		query := &search.MatchAllQuery{}
 		searchQuery := search.NewSearchQuery()
+		// searchQuery.SetSort(&search.Sort{
+		// 	[]search.Sorter{
+		// 		&search.FieldSort{
+		// 			FieldName: "TopicTime",
+		// 			Order:     search.SortOrder_DESC.Enum(),
+		// 		},
+		// 	},
+		// })
 		searchQuery.SetQuery(query)
 		searchQuery.SetGetTotalCount(true)
 		searchQuery.SetLimit(int32(pageSize))
@@ -114,6 +122,14 @@ func GetAllTopicRecord(client *tablestore.TableStoreClient, searchBody TopicSear
 		query.FieldName = "username"
 		query.Term = username
 		searchQuery := search.NewSearchQuery()
+		// searchQuery.SetSort(&search.Sort{
+		// 	[]search.Sorter{
+		// 		&search.FieldSort{
+		// 			FieldName: "TopicTime",
+		// 			Order:     search.SortOrder_DESC.Enum(),
+		// 		},
+		// 	},
+		// })
 		searchQuery.SetQuery(query)
 		searchQuery.SetGetTotalCount(true)
 		searchQuery.SetLimit(int32(pageSize))

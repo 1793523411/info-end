@@ -88,6 +88,14 @@ func GetAllVideoRecord(client *tablestore.TableStoreClient, searchBody SearchPar
 	if userType == "admin" {
 		query := &search.MatchAllQuery{}
 		searchQuery := search.NewSearchQuery()
+		searchQuery.SetSort(&search.Sort{
+			[]search.Sorter{
+				&search.FieldSort{
+					FieldName: "vtime",
+					Order:     search.SortOrder_DESC.Enum(),
+				},
+			},
+		})
 		searchQuery.SetQuery(query)
 		searchQuery.SetGetTotalCount(true)
 		searchQuery.SetLimit(int32(pageSize))
@@ -110,6 +118,14 @@ func GetAllVideoRecord(client *tablestore.TableStoreClient, searchBody SearchPar
 		query.FieldName = "username"
 		query.Term = username
 		searchQuery := search.NewSearchQuery()
+		searchQuery.SetSort(&search.Sort{
+			[]search.Sorter{
+				&search.FieldSort{
+					FieldName: "vtime",
+					Order:     search.SortOrder_DESC.Enum(),
+				},
+			},
+		})
 		searchQuery.SetQuery(query)
 		searchQuery.SetGetTotalCount(true)
 		searchQuery.SetLimit(int32(pageSize))
